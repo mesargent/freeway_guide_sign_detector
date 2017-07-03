@@ -44,10 +44,10 @@ def getHeightsWidths(jsonString):
 	result = [item for sublist in result for item in sublist]
 	return result
 
-
 def getAllFiles(sourceDirectory):
 	files = filter( lambda f: not f.startswith('.'), os.listdir(sourceDirectory))
 	return files
+
 
 def getMultiple(directory, num, label):
 	data = []
@@ -58,14 +58,51 @@ def getMultiple(directory, num, label):
 		cv2.imwrite(directory + "/" + filename, img)
 	return data
 
+def cropToRatio(img, ratio):
+	if ratio > 1:
+		h = img.shape[0]
+		w = int(round(h / ratio))
+	else:
+		w = img.shape[1] 
+		h = int(round(w * ratio))
+
+	return img[:h, :w, :]
+
+
+
+#need to get HOGs for different aspect ratios
+def ratiosToHOGS(ratios, minDim):
+    blockSize = (16,16)
+    blockStride = (8,8)
+    cellSize = (8,8)
+    nbins = 9
+    derivAperture = 1
+    winSigma = -1
+    histogramNormType = 0
+    L2HysThreshold = 2.0000000000000001e-01
+    gammaCorrection = 0
+    nlevels = 64
+    HOGs = []
+    dims = []
+    
+    if minDim % 8 != 0:
+        raise "minDim not divisible by 8", minDim
+    
+    for r in ratios:
+        prod = int(r * minDim)
+        dimW = prod - (prod % 8)       
+        dimens = (minDim, dimW)
+        hog = cv2.HOGDescriptor(dimens,blockSize,blockStride,cellSize,nbins,derivAperture,winSigma,
+                        histogramNormType,L2HysThreshold,gammaCorrection,nlevels)
+        HOGs.append(hog)
+        dims.append((minDim, dimW))
+    return HOGs, dims
+
 
 
 if __name__ == "__main__":
-	images = getImagesFromJSON(open("labels.json").read())
-	print images[0].shape
-
-	
-
+	image = cv2.imread("blanks/0.png")
+	img = cropToRatio(image, 1.2)
 
 
 	# #set parameters for hog
