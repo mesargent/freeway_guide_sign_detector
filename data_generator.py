@@ -6,6 +6,7 @@ import multiscale_detect as md
 import json
 import itertools
 from random import randint
+from scipy import ndimage
 
 
 #returns a dictionary of imagepaths -> array of bounding boxes 
@@ -49,7 +50,25 @@ def getAllFiles(sourceDirectory):
 	return files
 
 
-def getMultiple(directory, num, label):
+def getRandomFile(sourceDirectory):
+	files = getAllFiles(sourceDirectory)
+	#select random file
+	n = len(files) - 1
+	fileno = randint(0, n)
+	filename = files[fileno]
+	return filename
+
+def getRandomImage(sourceDirectory):
+	filename = getRandomFile(sourceDirectory)
+
+	img = cv2.imread(sourceDirectory + "/" + filename, -1)
+	if img is None:
+		print filename, "is not an image"
+		return
+	else:
+		return filename, img
+
+def getRandomMultiple(directory, num, label):
 	data = []
 	for i in range(num):
 		filename, img = getRandomImage(directory)
@@ -68,6 +87,11 @@ def cropToRatio(img, ratio):
 
 	return img[:h, :w, :]
 
+
+def get_mods(img):    
+    results = []
+    results.extend([ndimage.rotate(img, 2), ndimage.rotate(img, -2), cv2.flip(img, 1)])
+    return results
 
 
 #need to get HOGs for different aspect ratios
