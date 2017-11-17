@@ -26,7 +26,7 @@ def annotationsToTuples(annotationArray):
 def getImagesFromJSON(jsonString, imgdir=os.getcwd()):
 	signs = []
 	boxes = getBoundingBoxesForImages(jsonString)
-	for key, arr in boxes.iteritems():
+	for key, arr in boxes.items():
 		scene = cv2.imread(imgdir + "/" + key)
 		if scene is None:
 			continue
@@ -46,7 +46,7 @@ def getHeightsWidths(jsonString):
 	return result
 
 def getAllFiles(sourceDirectory):
-	files = filter( lambda f: not f.startswith('.'), os.listdir(sourceDirectory))
+	files = list(filter( lambda f: not f.startswith('.'), os.listdir(sourceDirectory)))
 	return files
 
 
@@ -63,7 +63,7 @@ def getRandomImage(sourceDirectory):
 
 	img = cv2.imread(sourceDirectory + "/" + filename, -1)
 	if img is None:
-		print filename, "is not an image"
+		print (filename, "is not an image")
 		return
 	else:
 		return filename, img
@@ -110,7 +110,7 @@ def ratiosToHOGS(ratios, minDim):
     dims = []
     
     if minDim % 8 != 0:
-        raise "minDim not divisible by 8", minDim
+        raise("minDim not divisible by 8", minDim)
     
     for r in ratios:
         prod = int(r * minDim)
