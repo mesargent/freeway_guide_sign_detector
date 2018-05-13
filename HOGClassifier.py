@@ -4,4 +4,5 @@ class HOGSVNClassifier:
 		self.hog = hog
 
 	def classify(self, image):
-		
+		features = hog.compute(img[:,:,:3])
+		return svn.predict(image)

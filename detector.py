@@ -1,12 +1,24 @@
 class Detector:
-	def __init__(self):
-		self.preprocessors = []
-		self.region_generator = None
-		self.classifier = None
+	def __init__(self, preprocessors, region_finder, classifier):
+		self.preprocessors = preprocessors
+		self.region_finder = region_finder
+		self.classifier = classifier
 
-	def detect_photo(self, photo):
-		pass
+	def detect_photo(self, image):
+		image = self.preprocess(image)
+		regions = self.region_finder.find_regions(image)
+		detections = []
+		for region in regions:
+			if self.classifier.classify(region):
+				detections.add(region)
+		return region	
 
 	def detect_video(self, video):
 		pass
 
+	def preprocess(self, image, preprocessors):
+		for preprocessor in self.preprocessors:
+			image = preprocessor.process(image)
+		return image
+
+	
