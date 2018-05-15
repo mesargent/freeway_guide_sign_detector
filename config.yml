@@ -1,0 +1,25 @@
+image_info:
+  num_neg: 400
+  num_pos: 270
+
+  image_paths:
+    positive: "positive_real"
+    negative: "sun_images"
+    positive_json: "labels.json"
+    detect: "multiscale_test"
+    video: ""
+
+hog_params:
+  mindim: 80
+  blocksize: 16
+  blockstride: 8
+  cellsize: 8
+  nbins: 9
+
+svn_params:
+  kernel: 'linear'
+  c: 1.0
+  probability: True
+
+classifier:
+  min_threshold: 0.1
