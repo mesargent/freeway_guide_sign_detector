@@ -1,8 +1,9 @@
 class Detector:
-	def __init__(self, preprocessors, region_finder, classifier):
+	def __init__(self, params, preprocessors, region_finder, classifier):
 		self.preprocessors = preprocessors
 		self.region_finder = region_finder
 		self.classifier = classifier
+		self.params = params
 
 	def detect_photo(self, image):
 		image = self.preprocess(image)
