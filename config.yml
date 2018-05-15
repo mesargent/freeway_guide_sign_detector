@@ -9,6 +9,11 @@ image_info:
     detect: "multiscale_test"
     video: ""
 
+preprocessing_params:
+  colors_lower: [0,0,0]
+  colors_upper: [255, 255, 40]
+
+
 hog_params:
   mindim: 80
   blocksize: 16
