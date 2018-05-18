@@ -11,7 +11,7 @@ image_info:
 
 preprocessing_params:
   colors_lower: [0,0,0]
-  colors_upper: [255, 255, 40]
+  colors_upper: [255, 255, 10]
 
 
 hog_params:
@@ -21,10 +21,11 @@ hog_params:
   cellsize: 8
   nbins: 9
 
-svn_params:
+svm_params:
   kernel: 'linear'
   c: 1.0
   probability: True
+  model_path: "hog_svm.pkl"
 
 classifier:
   min_threshold: 0.1
