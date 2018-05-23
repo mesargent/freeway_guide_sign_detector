@@ -13,7 +13,6 @@ preprocessing_params:
   colors_lower: [0,0,0]
   colors_upper: [255, 255, 10]
 
-
 hog_params:
   mindim: 80
   blocksize: 16

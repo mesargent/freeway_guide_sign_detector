@@ -22,8 +22,7 @@ def main():
 		#get preprocessors
 		remove_red_processor = RemoveRed(config)
 		regions_preprocessor = RegionsPreprocessor(config)
-		region_finder = RegionFinder(config, [regions_preprocessor])
-		
+		region_finder = RegionFinder(config, [regions_preprocessor])		
 		svm_classifier = HOGSVMClassifier(config)
 
 		print("detecting signs in images folder {}/".format(config['image_info']['image_paths']['detect']))
